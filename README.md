@@ -1,6 +1,6 @@
 <h1 align="center">Docker & Container Misconfiguration Scanner</h1>
 <p align="center">
-<a href="https://github.com/Daniel-wambua/docker-scanner"><img src="src/logo.png" width="48" /><br /></a>
+<a href="https://github.com/Daniel-wambua/docker-scanner"><img src="src/logo.png" width="120" /><br /></a>
 <i>A minimal, production-ready security scanner for Docker & containers</i>
 <br />
 <i>Detect misconfigurations in Dockerfiles, docker-compose files, and running containers</i>
