@@ -23,23 +23,28 @@ jobs:
         pip install -r requirements.txt
     
     - name: Scan Dockerfile
+      if: hashFiles('Dockerfile') != ''
       run: |
         python src/main.py --dockerfile Dockerfile
       continue-on-error: false
     
     - name: Scan Docker Compose
+      if: hashFiles('docker-compose.yml') != ''
       run: |
         python src/main.py --compose docker-compose.yml
       continue-on-error: false
-      if: hashFiles('docker-compose.yml') != ''
+    
+    - name: Run Tests
+      run: |
+        pytest tests/ -v
     
     - name: Generate JSON Report
-      if: always()
+      if: always() && hashFiles('Dockerfile') != ''
       run: |
         python src/main.py --dockerfile Dockerfile --json > scan-results.json
     
     - name: Upload Scan Results
-      if: always()
+      if: always() && hashFiles('scan-results.json') != ''
       uses: actions/upload-artifact@v4
       with:
         name: security-scan-results
