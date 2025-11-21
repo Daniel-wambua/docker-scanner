@@ -1,0 +1,46 @@
+name: Docker Security Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    
+    - name: Scan Dockerfile
+      run: |
+        python src/main.py --dockerfile Dockerfile
+      continue-on-error: false
+    
+    - name: Scan Docker Compose
+      run: |
+        python src/main.py --compose docker-compose.yml
+      continue-on-error: false
+      if: hashFiles('docker-compose.yml') != ''
+    
+    - name: Generate JSON Report
+      if: always()
+      run: |
+        python src/main.py --dockerfile Dockerfile --json > scan-results.json
+    
+    - name: Upload Scan Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-scan-results
+        path: scan-results.json
