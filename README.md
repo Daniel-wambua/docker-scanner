@@ -105,6 +105,9 @@ python src/main.py --dockerfile Dockerfile --json
 
 ## CI/CD Integration
 
+<details>
+<summary>Click to expand CI/CD examples</summary>
+
 Use in your CI pipeline with JSON output:
 
 ```bash
@@ -124,6 +127,8 @@ GitHub Actions example:
     python src/main.py --dockerfile Dockerfile --compose docker-compose.yml
 ```
 
+</details>
+
 ## Testing
 
 Run the test suite:
@@ -138,6 +143,9 @@ All 37 tests cover:
 - Container runtime analysis
 
 ## Checks Performed
+
+<details>
+<summary>Click to see all security checks</summary>
 
 ### Dockerfile
 - ✅ Latest tag usage detection
@@ -160,7 +168,12 @@ All 37 tests cover:
 - ✅ Host network mode usage
 - ✅ Sensitive host path mounts (/, /etc, /var/run/docker.sock, /proc, /sys)
 
+</details>
+
 ## How to Extend Checks
+
+<details>
+<summary>Click to see how to add custom checks</summary>
 
 ### Adding Dockerfile Checks
 
@@ -218,6 +231,8 @@ def check_new_runtime_rule(container) -> list[dict]:
 ```
 
 Register the check in the `RUNTIME_CHECKS` list at the bottom of the file.
+
+</details>
 
 ## Requirements
 
